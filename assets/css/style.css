@@ -1349,36 +1349,69 @@ p {
 }
 
 /* ==========================================================================
-   Pagina "Chi era Francesco Talia"
+   Pagina "Chi era Francesco Talia" – stile "lettera":
+   un foglio unico, la foto inserita nel testo che le scorre intorno
    ========================================================================== */
-.francesco__pagina {
-  display: grid;
-  gap: clamp(2rem, 5vw, 3.25rem);
-  justify-items: center;
+.foglio {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 5vw, 3.75rem);
+  background: var(--carta);
+  border: var(--tratto);
+  border-radius: var(--raggio-mano);
+  box-shadow: 10px 10px 0 var(--verde);
 }
-.francesco__intestazione {
-  text-align: center;
+.foglio .titolo {
+  margin-bottom: 2rem;
 }
-.francesco__intestazione .titolo {
-  margin-bottom: 0;
+.foglio__foto {
+  float: right;
+  width: min(42%, 17rem);
+  margin: 0.4rem 0 1.25rem 2rem;
+  transform: rotate(-2deg);
 }
-/* foto larga: lascia vedere lo Stretto alle spalle di Francesco */
-.francesco__foto {
-  width: min(100%, 52rem);
-  margin: 0;
-}
-.francesco__foto img {
+.foglio__foto img {
   display: block;
   width: 100%;
   height: auto;
   border: var(--tratto);
-  border-radius: var(--raggio-mano);
-  box-shadow: 10px 10px 0 var(--rosa);
+  border-radius: 14px 8px 16px 10px / 10px 16px 8px 14px;
+  box-shadow: 6px 6px 0 var(--rosa);
 }
-.francesco__testo {
-  width: min(100%, 44rem);
-  padding-top: clamp(0.5rem, 2vw, 1rem);
+@media (max-width: 599px) {
+  .foglio__foto {
+    float: none;
+    width: min(75%, 16rem);
+    margin: 0 auto 1.75rem;
+  }
 }
-.francesco__chiusura {
-  border-left-color: var(--rosa);
+/* primo paragrafo un po' più grande, per invitare alla lettura */
+.foglio__attacco {
+  font-size: 1.22rem;
+  line-height: 1.6;
+  font-weight: 600;
+}
+.foglio__chiusura {
+  clear: both;
+  border-left-color: var(--verde);
+}
+.foglio__firma {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.foglio__firma img {
+  width: 4.5rem;
+}
+.foglio__firma span {
+  font-family: var(--font-titoli);
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+.foglio__fine {
+  max-width: 50rem;
+  margin: 2.5rem auto 0;
+  text-align: center;
 }
