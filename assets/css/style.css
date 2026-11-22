@@ -72,6 +72,10 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
+  /* iPhone: niente "rimbalzo" oltre la fine della pagina e, se compare,
+     lo spazio sotto il piè di pagina è grigio come il piè di pagina */
+  overscroll-behavior-y: none;
+  background: var(--grigio-chiaro);
 }
 
 body {
