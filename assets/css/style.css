@@ -917,7 +917,7 @@ p {
 .email-pulsante__indirizzo {
   font-size: 0.88rem;
   color: var(--testo-tenue);
-  overflow-wrap: anywhere;
+  white-space: nowrap; /* l'indirizzo resta sempre su una riga */
 }
 
 /* Modulo di contatto */
@@ -1414,4 +1414,40 @@ p {
   max-width: 50rem;
   margin: 2.5rem auto 0;
   text-align: center;
+}
+
+/* ==========================================================================
+   Pulsante email nei Contatti – telefono
+   Icona piccola accanto all'etichetta e indirizzo sotto, su tutta la
+   larghezza: il carattere si adatta allo schermo così l'indirizzo resta
+   su una riga (è largo circa 18,3 volte la grandezza del carattere).
+   ========================================================================== */
+@media (max-width: 520px) {
+  .contatti-scheda {
+    padding: 1.75rem 1.25rem;
+  }
+  .email-pulsante {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 0.6rem;
+    row-gap: 0.2rem;
+    padding: 0.75rem;
+    border-radius: 22px;
+  }
+  .email-pulsante__testo {
+    display: contents;
+  }
+  .email-pulsante__icona {
+    width: 30px;
+    height: 30px;
+  }
+  .email-pulsante__icona svg {
+    width: 16px;
+    height: 16px;
+  }
+  .email-pulsante__indirizzo {
+    grid-column: 1 / -1;
+    font-size: min(0.88rem, calc((100vw - 132px) / 18.4));
+  }
 }
