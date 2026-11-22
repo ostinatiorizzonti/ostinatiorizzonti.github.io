@@ -97,25 +97,57 @@
   /* --- Modulo di contatto --- */
   document.querySelectorAll('form[data-contatti]').forEach(function (form) {
     var esito = form.querySelector('.modulo-contatti__esito');
+    var pulsante = form.querySelector('button[type="submit"]');
+    var EMAIL_ASSOCIAZIONE = 'ass.culturaleostinatiorizzonti@gmail.com';
+
+    // momento in cui il modulo è stato mostrato (i robot lo compilano in un attimo)
+    var campoTempo = form.querySelector('[name="t"]');
+    var mostratoAlle = Date.now();
+
+    var mostraEsito = function (testo, tipo) {
+      esito.textContent = testo;
+      esito.className = 'modulo-contatti__esito' + (tipo ? ' e-' + tipo : '');
+    };
+
     form.addEventListener('submit', function (e) {
+      e.preventDefault();
       var nome = form.querySelector('[name="nome"]');
       var email = form.querySelector('[name="email"]');
       var messaggio = form.querySelector('[name="messaggio"]');
       var consenso = form.querySelector('[name="consenso"]');
       var errore = function (testo, campo) {
-        e.preventDefault();
-        esito.textContent = testo;
+        mostraEsito(testo, 'errore');
         campo.focus();
       };
       if (!nome.value.trim()) return errore('Inserisci il tuo nome.', nome);
       if (!email.value || !email.checkValidity()) return errore('Inserisci un indirizzo email valido.', email);
       if (!messaggio.value.trim()) return errore('Scrivi il tuo messaggio.', messaggio);
       if (!consenso.checked) return errore('Per inviare il messaggio è necessario accettare l’informativa sulla privacy.', consenso);
-      // Finché il modulo non è collegato al servizio esterno non inviamo nulla
-      if (!form.getAttribute('action')) {
-        e.preventDefault();
-        esito.textContent = 'Il modulo sarà attivo a breve. Nel frattempo scrivici a ass.culturaleostinatiorizzonti@gmail.com';
-      }
+
+      // tempo (in millisecondi) passato da quando il modulo è stato mostrato
+      if (campoTempo) campoTempo.value = Date.now() - mostratoAlle;
+      pulsante.disabled = true;
+      mostraEsito('Invio in corso…');
+
+      fetch(form.getAttribute('action'), { method: 'POST', body: new FormData(form) })
+        .then(function (risposta) {
+          return risposta.json().catch(function () { return { ok: false }; });
+        })
+        .then(function (dati) {
+          if (dati.ok) {
+            form.reset();
+            mostratoAlle = Date.now();
+            mostraEsito(dati.messaggio || 'Grazie! Il tuo messaggio è stato inviato.', 'ok');
+          } else {
+            mostraEsito(dati.messaggio || ('Non siamo riusciti a inviare il messaggio. Riprova più tardi o scrivici a ' + EMAIL_ASSOCIAZIONE + '.'), 'errore');
+          }
+        })
+        .catch(function () {
+          mostraEsito('Non siamo riusciti a inviare il messaggio. Controlla la connessione e riprova, oppure scrivici a ' + EMAIL_ASSOCIAZIONE + '.', 'errore');
+        })
+        .then(function () {
+          pulsante.disabled = false;
+        });
     });
   });
 })();

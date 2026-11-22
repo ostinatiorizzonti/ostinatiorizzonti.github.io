@@ -1110,6 +1110,31 @@ p {
   margin: 0;
   font-weight: 700;
 }
+.modulo-contatti__esito.e-ok {
+  padding: 0.75rem 1rem;
+  background: var(--verde-chiaro);
+  border: 2px solid var(--verde);
+  border-radius: 12px;
+}
+.modulo-contatti__esito.e-errore {
+  padding: 0.75rem 1rem;
+  background: var(--rosa-chiaro);
+  border: 2px solid var(--rosa);
+  border-radius: 12px;
+}
+.modulo-contatti button[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* campo nascosto anti-robot */
+.campo-trappola {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
 
 /* ---------- Piè di pagina ---------- */
 .piede {
