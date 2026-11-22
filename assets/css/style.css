@@ -1347,3 +1347,58 @@ p {
 .sezione--testo {
   padding-top: clamp(2.5rem, 6vw, 4rem);
 }
+
+/* ==========================================================================
+   Pagina "Chi era Francesco Talia"
+   ========================================================================== */
+.francesco__griglia {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .francesco__griglia {
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+  /* la foto resta visibile mentre si legge */
+  .francesco__foto {
+    position: sticky;
+    top: 8rem;
+  }
+}
+.francesco__foto {
+  margin: 0;
+  width: min(100%, 26rem);
+  justify-self: center;
+}
+.francesco__foto img,
+.francesco__foto--attesa {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: var(--carta);
+  border: var(--tratto);
+  border-radius: var(--raggio-mano);
+  box-shadow: 10px 10px 0 var(--rosa);
+}
+/* segnaposto finché non c'è la foto */
+.francesco__foto--attesa {
+  display: grid;
+  place-items: center;
+}
+.francesco__foto--attesa img {
+  width: 55%;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: none;
+  opacity: 0.85;
+}
+.francesco__testo .titolo {
+  margin-bottom: 1.75rem;
+}
+.francesco__chiusura {
+  border-left-color: var(--rosa);
+}
